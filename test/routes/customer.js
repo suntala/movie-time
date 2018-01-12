@@ -45,7 +45,7 @@ test ('Reserve a ticket', async t => {
 
     // console.log([customer, ticket])
     const res = await request(app)
-        .post(`/customers/${customer.customerID}/reserve-ticket`)
+        .post(`/customers/${customer.customerID}/reserve-ticket-test`)
         .send({ticketID: ticket.ticketID})
     
     const [firstStage, secondStage, ticketDetails] = res.body
@@ -67,6 +67,7 @@ test ('Reserve a ticket', async t => {
     t.is(res2.status, 200)
     t.is(firstStage, "reserved")
     t.is(secondStage, "available")
+    t.is(res2.body[0].status, "available")
 
 
     // console.log()
