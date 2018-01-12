@@ -10,9 +10,10 @@ app.set('view engine', 'pug')
 
 
 const home = require('./routes/home')
+const ticket = require('./routes/ticket')
 
 app.use('/', home)
-
+app.use('/tickets', ticket)
 
 
 module.exports = app

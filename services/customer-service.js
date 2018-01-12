@@ -1,19 +1,19 @@
 const fs = require('fs')
 const CustomerModel = require('../models/customer-model')  
 
-const add = async (customer) => {
+const add = (customer) => {
     return CustomerModel.create(customer)
 }
 
-const findAll = async () => {
+const findAll = () => {
     return CustomerModel.find()
 }
 
-const del = async (customerID) => {
+const del = (customerID) => {
     return CustomerModel.remove({ customerID })
 }
 
-const find = async (customerID) => {
+const find = (customerID) => {
     return CustomerModel.findOne({ customerID })
 }
 

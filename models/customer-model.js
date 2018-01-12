@@ -10,6 +10,13 @@ const CustomerSchema = mongoose.Schema({
     funds: {
         type: Number,
         required: true
+    },
+    haveSeat: {
+        type: Boolean,
+        required: true
+    },
+    seatNumber: {
+        type: String
     }
 })
 

@@ -1,19 +1,21 @@
 const fs = require('fs')
 const TicketModel = require('../models/ticket-model')  
+const CustomerModel = require('../models/customer-model')  
 
-const add = async (ticket) => {
+
+const add = (ticket) => {
     return TicketModel.create(ticket)
 }
 
-const findAll = async () => {
+const findAll = () => {
     return TicketModel.find()
 }
 
-const del = async (ticketID) => {
+const del = (ticketID) => {
     return TicketModel.remove({ ticketID })
 }
 
-const find = async (ticketID) => {
+const find = (ticketID) => {
     return TicketModel.findOne({ ticketID })
 }
 
@@ -26,12 +28,48 @@ const edit = async (ticketID, data) => {
     return newTicket;
 }
 
+const findAvailableSeats = async () => {
+    return TicketModel.find({status: "available"})
+    // return findAll()
+}
 
+// const giveTicketPrice = async (ticketID) => {
+//     const ticket = await TicketModel.findOne({ ticketID })
+//     if (ticket.front) {
+//         return 20
+//     }
+//     else {
+//         return 10
+//     }
+// }
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketModel.findOne({ ticketID })
+
+//     if customer.haveSeat == false
+//     ticketStatus = "reserved"
+//     wait 3 mins
+//     if customerPaid
+//     ticketStatus = "unavailable"
+//     else
+//     ticketStatus = "available"
+
+
+// }
+
+// const buySeat = async (ticketID, customerID) => {
+//     const ticket = await TicketModel.findOne({ ticketID })
+//     const customer = await CustomerModel.findOne({ customerID })
+//     if customer.haveSeat == false
+//     remove the price from the funds
+// }
 
 module.exports = {
     findAll,
     add,
     del,
     find,
-    edit
+    edit,
+    findAvailableSeats, 
+    // giveTicketPrice
 }
