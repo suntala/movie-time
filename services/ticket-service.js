@@ -1,4 +1,4 @@
-const fs = require('fs')
+// const fs = require('fs')
 const TicketModel = require('../models/ticket-model')  
 const CustomerModel = require('../models/customer-model')  
 

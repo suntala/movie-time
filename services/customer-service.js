@@ -1,4 +1,4 @@
-const fs = require('fs')
+// const fs = require('fs')
 const CustomerModel = require('../models/customer-model')  
 const TicketService = require('../services/ticket-service')  
 // const theaterFunds = require('../theater-funds')
@@ -23,8 +23,10 @@ const find = (customerID) => {
 const edit = async (customerID, data) => {
     const customer = await CustomerModel.findOne({ customerID })
     if (typeof data.name !== 'undefined'){ customer.name = data.name }     
-    if (typeof data.status !== 'undefined'){ customer.status = data.status }     
-    if (typeof data.front !== 'undefined'){ customer.front = data.front }     
+    if (typeof data.funds !== 'undefined'){ customer.funds = data.funds }     
+    if (typeof data.haveSeat !== 'undefined'){ customer.haveSeat = data.haveSeat }  
+    if (typeof data.seatNumber !== 'undefined'){ customer.seatNumber = data.seatNumber }     
+    if (typeof data.paid !== 'undefined'){ customer.paid = data.paid }        
     const newCustomer = await customer.save();
     return newCustomer;
 }
