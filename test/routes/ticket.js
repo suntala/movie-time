@@ -25,10 +25,7 @@ test ('Get individual ticket page including price ', async t => {
 
     const input = {name:'Test ' + Math.random(), status: "available", front: true}
 
-    const ticket = (await request(app)
-        .post('/tickets/add')
-        .send(input))
-        .body
+    const ticket = (await request(app).post('/tickets/add').send(input)).body
 
     const res = await request(app).get(`/tickets/${ticket.ticketID}`)
  
