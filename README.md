@@ -22,5 +22,6 @@ Pay for a ticket:
 Reserve a ticket: 
     .post(`/customers/${customer.customerID}/reserve-ticket-test`)
 
-
-
+Add a ticket and get tickets page: 
+    .post('/tickets/add')
+    .get('/tickets')
