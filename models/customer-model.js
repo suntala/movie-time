@@ -17,6 +17,9 @@ const CustomerSchema = mongoose.Schema({
     },
     seatNumber: {
         type: String
+    }, 
+    paid: {
+        type: Boolean
     }
 })
 

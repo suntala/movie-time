@@ -13,4 +13,12 @@ router.get('/', async (req, res, next) => {
     res.send(tickets)
 })
 
+router.get('/:ticketID', async (req, res, next) => {
+    const ticket = await TicketService.find(req.params.ticketID)
+    const price = await TicketService.giveTicketPrice(req.params.ticketID)
+    const fullDetails = [ticket, price]
+    res.send(fullDetails)
+    // res.send(ticket)
+})
+
 module.exports = router;
