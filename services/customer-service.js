@@ -34,21 +34,10 @@ const reserveSeat = async (ticketID, customerID) => {
     const ticket = await TicketService.find(ticketID)
     const customer = await find(customerID)
 
-    const timeIsUp = () => {
-        console.log("Time is up")
-    }
-    
-
     let newTicket;
-    if (!customer.haveSeat) {
-        ticket.status = "reserved"
-        customer.haveSeat = true
-        await ticket.save()
-        await customer.save()
-        // setTimeout(myFunc, 180000);
-        setTimeout(timeIsUp, 30000);
+    
+    const timeIsUp = async () => {
 
-        
         if (customer.paid) {
             ticket.status = "unavailable"
             // customer.haveSeat = true   //add seatNumber
@@ -60,6 +49,18 @@ const reserveSeat = async (ticketID, customerID) => {
             newTicket = await ticket.save()  
             await customer.save()   
         }
+
+        console.log("Time is up")
+    }
+    
+
+    if (!customer.haveSeat) {
+        ticket.status = "reserved"
+        customer.haveSeat = true
+        await ticket.save()
+        await customer.save()
+        // setTimeout(myFunc, 180000);
+        setTimeout(timeIsUp, 30000);
     }
     // else{
     //     newTicket = ticket
@@ -79,6 +80,7 @@ const paySeat = async (ticketID, customerID) => {
     let newCustomer;
     if (!customer.haveSeat) {
         customer.funds -= price
+        customer.paid = true
         newCustomer = await customer.save()
     }
 
@@ -238,4 +240,45 @@ module.exports = {
 
 
 //     // return newTicket
+// }
+
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+//     let newTicket;
+    
+//     const timeIsUp = () => {
+//         console.log("Time is up")
+//     }
+    
+
+
+//     if (!customer.haveSeat) {
+//         ticket.status = "reserved"
+//         customer.haveSeat = true
+//         await ticket.save()
+//         await customer.save()
+//         // setTimeout(myFunc, 180000);
+//         setTimeout(timeIsUp, 30000);
+
+        
+//         if (customer.paid) {
+//             ticket.status = "unavailable"
+//             // customer.haveSeat = true   //add seatNumber
+//             newTicket = await ticket.save()  //await setTimeout?
+//         }
+//         else {
+//             ticket.status = "available"
+//             customer.haveSeat = false
+//             newTicket = await ticket.save()  
+//             await customer.save()   
+//         }
+//     }
+//     // else{
+//     //     newTicket = ticket
+//     // }
 // }

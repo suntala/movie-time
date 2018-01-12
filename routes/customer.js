@@ -30,7 +30,7 @@ router.post('/:customerID/buy-ticket', async (req, res, next) => {
     // const newTicket = await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID)
     // res.send(newTicket)
     const newCustomer = await CustomerService.paySeat(req.body.ticketID, req.params.customerID)
-    res.send(newCustomer)
+    res.send(newCustomer)  //figure out about when it gets sent (logging in console...)
 })
 
 // router.get('/', async (req, res, next) => {
