@@ -9,8 +9,10 @@ const CustomerSchema = mongoose.Schema({
     },
     funds: {
         type: Number,
+        default: 100000,
         required: true
     },
+    // funds: 100000,
     haveSeat: {
         type: Boolean,
         required: true

@@ -1,4 +1,3 @@
-const funds = 0
+const theaterFunds = 500;
 
-
-module.exports = funds
+export default theaterFunds;

@@ -2,6 +2,7 @@ const fs = require('fs')
 const CustomerModel = require('../models/customer-model')  
 const TicketService = require('../services/ticket-service')  
 // const theaterFunds = require('../theater-funds')
+// import { theaterFunds } from '../theater-funds.js'
 
 const add = (customer) => {
     return CustomerModel.create(customer)
@@ -37,34 +38,53 @@ const reserveSeat = async (ticketID, customerID) => {
         console.log("Time is up")
     }
     
+
     let newTicket;
     if (!customer.haveSeat) {
         ticket.status = "reserved"
-        newTicket = await ticket.save()
-        // const newTicket = await ticket.save()
+        customer.haveSeat = true
+        await ticket.save()
+        await customer.save()
         // setTimeout(myFunc, 180000);
         setTimeout(timeIsUp, 30000);
 
+        
         if (customer.paid) {
             ticket.status = "unavailable"
-            customer.haveSeat = true   //add seatNumber
-            newTicket = await ticket.save() 
+            // customer.haveSeat = true   //add seatNumber
+            newTicket = await ticket.save()  //await setTimeout?
         }
         else {
             ticket.status = "available"
-            newTicket = await ticket.save()     
+            customer.haveSeat = false
+            newTicket = await ticket.save()  
+            await customer.save()   
         }
     }
-
-
-
-    // if customerPaid
-    // ticketStatus = "unavailable"
-    // else
-    // ticketStatus = "available"
-    // and change the stuff for the customer too
-
+    // else{
+    //     newTicket = ticket
+    // }
 }
+
+// pay function....
+
+const paySeat = async (ticketID, customerID) => {
+    // console.log(ticketID)
+    const ticket = await TicketService.find(ticketID)
+    // console.log(ticket)
+
+    const customer = await find(customerID)
+    const price = await TicketService.giveTicketPrice(ticketID)
+
+    let newCustomer;
+    if (!customer.haveSeat) {
+        customer.funds -= price
+        newCustomer = await customer.save()
+    }
+
+    return newCustomer
+}
+
 
 // const buySeat = async (ticketID, customerID) => {
 //     const ticket = await TicketModel.findOne({ ticketID })
@@ -79,7 +99,8 @@ module.exports = {
     del,
     find,
     edit,
-    reserveSeat
+    reserveSeat, 
+    paySeat
 }
 
 
@@ -126,4 +147,95 @@ module.exports = {
 //     // ticketStatus = "available"
 //     // and change the stuff for the customer too
 
+// }
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+//     const timeIsUp = () => {
+//         console.log("Time is up")
+//     }
+    
+//     let newTicket;
+//     if (!customer.haveSeat) {
+//         ticket.status = "reserved"
+//         newTicket = await ticket.save()
+//         // const newTicket = await ticket.save()
+//         // setTimeout(myFunc, 180000);
+//         setTimeout(timeIsUp, 30000);
+
+//         if (customer.paid) {
+//             ticket.status = "unavailable"
+//             customer.haveSeat = true   //add seatNumber
+//             newTicket = await ticket.save() 
+//         }
+//         else {
+//             ticket.status = "available"
+//             newTicket = await ticket.save()     
+//         }
+//     }
+
+
+
+//     // if customerPaid
+//     // ticketStatus = "unavailable"
+//     // else
+//     // ticketStatus = "available"
+//     // and change the stuff for the customer too
+//     // return newTicket
+// }
+
+
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+//     const timeIsUp = () => {
+//         console.log("Time is up")
+//     }
+    
+
+//     // let newTicket;
+//     if (!customer.haveSeat) {
+//         ticket.status = "reserved"
+//         customer.haveSeat = true
+//         await ticket.save()
+//         await customer.save()
+//         // const newTicket = await ticket.save()
+//         // setTimeout(myFunc, 180000);
+//         setTimeout(timeIsUp, 30000);
+
+        
+//         if (customer.paid) {
+//             ticket.status = "unavailable"
+//             // customer.haveSeat = true   //add seatNumber
+//             newTicket = await ticket.save() 
+//         }
+//         else {
+//             ticket.status = "available"
+//             customer.haveSeat = false
+//             newTicket = await ticket.save()  
+//             await customer.save()   
+//         }
+//     }
+//     // else{
+//     //     newTicket = ticket
+//     // }
+
+
+
+//     // if customerPaid
+//     // ticketStatus = "unavailable"
+//     // else
+//     // ticketStatus = "available"
+//     // and change the stuff for the customer too
+
+
+//     // return newTicket
 // }
