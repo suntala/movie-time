@@ -25,3 +25,7 @@ Reserve a ticket:
 Add a ticket and get tickets page: 
     .post('/tickets/add')
     .get('/tickets')
+
+
+Get individual ticket page and price: 
+    .get(`/tickets/${ticket.ticketID}`)
