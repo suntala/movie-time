@@ -16,8 +16,10 @@ router.get('/', async (req, res, next) => {
 router.get('/:ticketID', async (req, res, next) => {
     const ticket = await TicketService.find(req.params.ticketID)
     const price = await TicketService.giveTicketPrice(req.params.ticketID)
-    const fullDetails = [ticket, price]
+    const fullDetails = [ticket,price]
     res.send(fullDetails)
+    // const fullDetails = ticket.concat([price])
+    // res.send(ti)
     // res.send(ticket)
 })
 

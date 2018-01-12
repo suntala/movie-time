@@ -30,42 +30,128 @@ const edit = async (customerID, data) => {
 }
 
 
-const reserveSeat = async (ticketID, customerID) => {
+
+
+const reserveSeat = async (ticketID, customerID, time) => {
     const ticket = await TicketService.find(ticketID)
     const customer = await find(customerID)
 
-    let newTicket;
-    
-    const timeIsUp = async () => {
+    if (time != 0) {
+        let newTicket;
+        const timeIsUp = async () => {
 
-        if (customer.paid) {
-            ticket.status = "unavailable"
-            // customer.haveSeat = true   //add seatNumber
-            newTicket = await ticket.save()  //await setTimeout?
+            if (customer.paid) {
+                ticket.status = "unavailable"
+                // customer.haveSeat = true   //add seatNumber
+                newTicket = await ticket.save()  //await setTimeout?
+            }
+            else {
+                ticket.status = "available"
+                customer.haveSeat = false
+                newTicket = await ticket.save()  
+                await customer.save()   
+            }
+            // return newTicket
+            console.log("Time is up")
         }
-        else {
-            ticket.status = "available"
-            customer.haveSeat = false
-            newTicket = await ticket.save()  
-            await customer.save()   
+
+        if (!customer.haveSeat && (ticket.status == "available")) {
+            ticket.status = "reserved"
+            customer.haveSeat = true
+            await ticket.save()
+            await customer.save()
+            // setTimeout(myFunc, 180000);
+
+            setTimeout(timeIsUp, time);
+            // console.log(newTicket)
+            // return newTicket
+
+            // const answer = await setTimeout(timeIsUp, 30000);
+            // return answer
         }
-
-        console.log("Time is up")
+        // else{
+        //     newTicket = ticket
+        // }
+        return `Please wait ${time}`
     }
-    
+    else {
+        let newTicketImmediate;
+        let firstStage = ticket.status
+        if (!customer.haveSeat && (ticket.status == "available")) {
+            ticket.status = "reserved"
+            firstStage = "reserved"
 
-    if (!customer.haveSeat && (ticket.status == "available")) {
-        ticket.status = "reserved"
-        customer.haveSeat = true
-        await ticket.save()
-        await customer.save()
-        // setTimeout(myFunc, 180000);
-        setTimeout(timeIsUp, 30000);
-    }
-    // else{
-    //     newTicket = ticket
-    // }
+            customer.haveSeat = true
+            await ticket.save()
+            await customer.save()
+            
+            let secondStage = firstStage
+            if (customer.paid) {
+                ticket.status = "unavailable"
+                secondStage = "unavailable"
+                // customer.haveSeat = true   //add seatNumber
+                newTicketImmediate = await ticket.save()  //await setTimeout?
+            }
+            else {
+                ticket.status = "available"
+                secondStage = "available"
+                customer.haveSeat = false
+                newTicketImmediate = await ticket.save()  
+                await customer.save()   
+            }
+            const answer = [firstStage, secondStage, newTicketImmediate]
+            return answer
+        }
+    }   
 }
+
+
+
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+//     let newTicket;
+    
+//     const timeIsUp = async () => {
+
+//         if (customer.paid) {
+//             ticket.status = "unavailable"
+//             // customer.haveSeat = true   //add seatNumber
+//             newTicket = await ticket.save()  //await setTimeout?
+//         }
+//         else {
+//             ticket.status = "available"
+//             customer.haveSeat = false
+//             newTicket = await ticket.save()  
+//             await customer.save()   
+//         }
+//         // return newTicket
+//         console.log("Time is up")
+//     }
+    
+
+//     if (!customer.haveSeat && (ticket.status == "available")) {
+//         ticket.status = "reserved"
+//         customer.haveSeat = true
+//         await ticket.save()
+//         await customer.save()
+//         // setTimeout(myFunc, 180000);
+
+//         setTimeout(timeIsUp, 30000);
+//         // console.log(newTicket)
+//         // return newTicket
+
+//         // const answer = await setTimeout(timeIsUp, 30000);
+//         // return answer
+//     }
+//     // else{
+//     //     newTicket = ticket
+//     // }
+// }
 
 // pay function....
 
@@ -344,4 +430,120 @@ module.exports = {
 //     }
 
 //     return newCustomer
+// }
+
+
+
+
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+//     let newTicket;
+    
+//     const timeIsUp = async () => {
+
+//         if (customer.paid) {
+//             ticket.status = "unavailable"
+//             // customer.haveSeat = true   //add seatNumber
+//             newTicket = await ticket.save()  //await setTimeout?
+//         }
+//         else {
+//             ticket.status = "available"
+//             customer.haveSeat = false
+//             newTicket = await ticket.save()  
+//             await customer.save()   
+//         }
+//         // return newTicket
+//         console.log("Time is up")
+//     }
+    
+
+//     if (!customer.haveSeat && (ticket.status == "available")) {
+//         ticket.status = "reserved"
+//         customer.haveSeat = true
+//         await ticket.save()
+//         await customer.save()
+//         // setTimeout(myFunc, 180000);
+
+//         setTimeout(timeIsUp, 30000);
+//         // console.log(newTicket)
+//         // return newTicket
+
+//         // const answer = await setTimeout(timeIsUp, 30000);
+//         // return answer
+//     }
+//     // else{
+//     //     newTicket = ticket
+//     // }
+// }
+
+
+
+
+// const reserveSeat = async (ticketID, customerID) => {
+//     const ticket = await TicketService.find(ticketID)
+//     const customer = await find(customerID)
+
+
+//     let newTicket;
+    
+//     const timeIsUp = async () => {
+
+//         // if (customer.paid) {
+//         //     ticket.status = "unavailable"
+//         //     // customer.haveSeat = true   //add seatNumber
+//         //     newTicket = await ticket.save()  //await setTimeout?
+//         // }
+//         // else {
+//         //     ticket.status = "available"
+//         //     customer.haveSeat = false
+//         //     newTicket = await ticket.save()  
+//         //     await customer.save()   
+//         // }
+//         // return newTicket
+//         console.log("Time is up")
+//     }
+    
+
+//     const reserveResult = function () {
+//         return new Promise(
+//             function (resolve, reject) {
+//                 setTimeout(timeIsUp, 30000);
+//                 if (customer.paid) {
+//                     ticket.status = "unavailable"
+//                     // customer.haveSeat = true   //add seatNumber
+//                     newTicket = await ticket.save()  //await setTimeout?
+//                 }
+//                 else {
+//                     ticket.status = "available"
+//                     customer.haveSeat = false
+//                     newTicket = await ticket.save()  
+//                     await customer.save()   
+//                 }
+//                 return newTicket
+//             }
+//         )
+//     }
+
+//     if (!customer.haveSeat && (ticket.status == "available")) {
+//         ticket.status = "reserved"
+//         customer.haveSeat = true
+//         await ticket.save()
+//         await customer.save()
+//         // setTimeout(myFunc, 180000);
+
+//         // setTimeout(timeIsUp, 30000);
+//         // console.log(newTicket)
+//         // return newTicket
+
+//         // const answer = await setTimeout(timeIsUp, 30000);
+//         // return answer
+//     }
+//     // else{
+//     //     newTicket = ticket
+//     // }
 // }

@@ -19,8 +19,15 @@ router.post('/:customerID/reserve-ticket', async (req, res, next) => {
     // const fullDetails = [ticket, price]
     // const newTicket = await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID)
     // res.send(newTicket)
-    await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID)
-    res.send(customer)
+
+    // await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID, 0) //also use 0 to test --> put in the right time later (create one for testing and one for regular)
+    // res.send(customer)
+
+    const stages = await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID, 0) //also use 0 to test --> put in the right time later (create one for testing and one for regular)
+    res.send(stages)
+
+    // const newTicket = await CustomerService.reserveSeat(req.body.ticketID, req.params.customerID)
+    // res.send(newTicket)
 })
 
 router.post('/:customerID/buy-ticket', async (req, res, next) => {

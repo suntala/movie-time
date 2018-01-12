@@ -21,7 +21,9 @@ const CustomerSchema = mongoose.Schema({
         type: String
     }, 
     paid: {
-        type: Boolean
+        type: Boolean,
+        default: false,
+        required: true
     }
 })
 
