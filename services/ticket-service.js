@@ -1,4 +1,3 @@
-// const fs = require('fs')
 const TicketModel = require('../models/ticket-model')  
 const CustomerModel = require('../models/customer-model')  
 
@@ -30,12 +29,10 @@ const edit = async (ticketID, data) => {
 
 const findAvailableSeats = async () => {
     return TicketModel.find({status: "available"})
-    // return findAll()
 }
 
 const giveTicketPrice = async (ticketID) => {
     const ticket = await find(ticketID)
-    // console.log(ticket)
     if (ticket.front) {
         return 20
     }
@@ -44,42 +41,6 @@ const giveTicketPrice = async (ticketID) => {
     }
 }
 
-// const reserveSeat = async (ticketID, customerID) => {
-//     const ticket = await find(ticketID)
-//     const customer = await CustomerModel(customerID)
-
-//     const timeIsUp = () => {
-//         console.log("Time is up")
-//     }
-
-//     if (!customer.haveSeat) {
-//         ticket.status = "reserved"
-//         // setTimeout(myFunc, 180000);
-//         setTimeout(myFunc, 60000);
-
-
-//         // if 
-
-//     }
-
-//     // if customer.haveSeat == false
-//     // ticketStatus = "reserved"
-//     // wait 3 mins
-
-//     // if customerPaid
-//     // ticketStatus = "unavailable"
-//     // else
-//     // ticketStatus = "available"
-//     // and change the stuff for the customer too
-
-// }
-
-// // const buySeat = async (ticketID, customerID) => {
-// //     const ticket = await TicketModel.findOne({ ticketID })
-// //     const customer = await CustomerModel.findOne({ customerID })
-// //     if customer.haveSeat == false
-// //     remove the price from the funds
-// // }
 
 module.exports = {
     findAll,

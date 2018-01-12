@@ -18,9 +18,6 @@ router.get('/:ticketID', async (req, res, next) => {
     const price = await TicketService.giveTicketPrice(req.params.ticketID)
     const fullDetails = [ticket,price]
     res.send(fullDetails)
-    // const fullDetails = ticket.concat([price])
-    // res.send(ti)
-    // res.send(ticket)
 })
 
 module.exports = router;

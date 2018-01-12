@@ -7,10 +7,7 @@ router.get('/', async (req, res, next) => {
     res.render('index')
 });
 
-// router.post('/', async (req, res, next) => {
-//     const ticket = await TicketService.add(req.body)
-//     res.send(ticket)
-// })
+
 
 
 
